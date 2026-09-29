@@ -1,19 +1,104 @@
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { trackRequest } from "../../api/requests";
+import { getErrorMessage } from "../../api/errors";
+import RequestStatus from "./RequestStatus";
+import {
+  cardClass,
+  errorClass,
+  inputClass,
+  labelClass,
+  primaryButtonClass,
+} from "../../components/ui/styles";
 
 export default function TrackingPage() {
+  const [searchParams] = useSearchParams();
+  const [trackingNumber, setTrackingNumber] = useState(searchParams.get("number") ?? "");
+  const [email, setEmail] = useState("");
+  const [credentials, setCredentials] = useState(null);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const payload = { tracking_number: trackingNumber.trim(), email: email.trim() };
+
+    setSubmitting(true);
+    setError(null);
+
+    try {
+      const data = await trackRequest(payload);
+      setCredentials(payload);
+      setResult(data);
+    } catch (err) {
+      setError(getErrorMessage(err));
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleReset = () => {
+    setResult(null);
+    setCredentials(null);
+    setEmail("");
+    setError(null);
+  };
+
+  if (result) {
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
-                <h2 className="text-2xl font-bold text-center">Track Your Request</h2>
-                <p className="text-gray-700">Enter your PF number to track the status of your request.</p>
-                <form className="space-y-4">
-                    <div>
-                        <label htmlFor="pfNumber" className="block text-sm font-medium text-gray-700">PF Number</label>
-                        <input type="text" id="pfNumber" name="pfNumber" required className="w-full px-3 py-2 mt-1 border rounded focus:outline-none focus:ring focus:border-blue-300" />
-                    </div>
-                    <button type="submit" className="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300">Track</button>
-                </form>
-            </div>
-        </div>
-    )
+      <RequestStatus
+        result={result}
+        credentials={credentials}
+        onUpdate={setResult}
+        onReset={handleReset}
+      />
+    );
+  }
+
+  return (
+    <div>
+      <h1 className="text-2xl font-semibold text-ink">Track a request</h1>
+      <p className="mt-2 text-ink-muted">
+        Enter your tracking number and the email address you used to submit the request.
+      </p>
+
+      <form onSubmit={handleSubmit} className={`${cardClass} mt-6 space-y-5`}>
+        <label className="block">
+          <span className={labelClass}>Tracking number</span>
+          <input
+            value={trackingNumber}
+            onChange={(event) => setTrackingNumber(event.target.value)}
+            placeholder="REQ-00001"
+            autoCapitalize="characters"
+            required
+            className={`${inputClass} mt-1 font-mono`}
+          />
+        </label>
+
+        <label className="block">
+          <span className={labelClass}>Email address</span>
+          <input
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="name@institution.ac.ke"
+            required
+            className={`${inputClass} mt-1`}
+          />
+        </label>
+
+        {error && (
+          <p role="alert" className={errorClass}>
+            {error}
+          </p>
+        )}
+
+        <button type="submit" disabled={submitting} className={`${primaryButtonClass} w-full`}>
+          {submitting ? "Looking up..." : "Track request"}
+        </button>
+      </form>
+    </div>
+  );
 }
- 

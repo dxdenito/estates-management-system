@@ -1,16 +1,28 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 });
+
+const AUTH_PATHS = ["/auth/me", "/auth/login", "/auth/logout"];
+
+let unauthorizedHandler = null;
+
+export const setUnauthorizedHandler = (handler) => {
+  unauthorizedHandler = handler;
+};
 
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      window.location.href = '/login';
+    const url = error.config?.url ?? "";
+    const isAuthCall = AUTH_PATHS.some((path) => url.endsWith(path));
+
+    if (error.response?.status === 401 && !isAuthCall && unauthorizedHandler) {
+      unauthorizedHandler();
     }
+
     return Promise.reject(error);
   }
 );
