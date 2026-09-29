@@ -21,8 +21,11 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
-    await apiClient.post('/auth/logout');
-    setUser(null);
+    try {
+      await apiClient.post('/auth/logout');
+    } finally {
+      setUser(null);
+    }
   };
 
   return (
