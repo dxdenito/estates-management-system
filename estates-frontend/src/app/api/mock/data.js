@@ -39,3 +39,17 @@ export const locations = [
   { id: 17, parent_id: 16, name: "Block A", type: "building", level: 1 },
   { id: 18, parent_id: 16, name: "Block B", type: "building", level: 1 },
 ];
+export const categories = [
+  { id: 1, name: "Electrical" },
+  { id: 2, name: "Plumbing" },
+  { id: 3, name: "Masonry" },
+  { id: 4, name: "Carpentry" },
+  { id: 5, name: "Painting" },
+  { id: 6, name: "Roofing" },
+  { id: 7, name: "Glazing" },
+  { id: 8, name: "Locks and Security" },
+];
+export const supervisorCategories = {
+  2: [1, 2, 3, 4],
+  8: [5, 6, 7, 8],
+};

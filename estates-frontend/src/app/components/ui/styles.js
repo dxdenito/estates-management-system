@@ -13,3 +13,6 @@ export const cardClass = "rounded-card border border-line bg-surface p-6 shadow-
 
 export const errorClass =
   "rounded-control border border-danger-border bg-danger-soft px-3 py-2 text-sm text-danger-strong";
+
+export const choicePillClass =
+  "block rounded-control border border-line-strong bg-surface px-3 py-2 text-center text-sm font-medium text-ink peer-checked:border-primary-strong peer-checked:bg-primary-soft peer-checked:text-primary-strong peer-focus-visible:ring-2 peer-focus-visible:ring-primary-strong/40 peer-disabled:opacity-60";
