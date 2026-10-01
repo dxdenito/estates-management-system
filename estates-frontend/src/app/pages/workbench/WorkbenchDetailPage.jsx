@@ -8,7 +8,8 @@ import StatusChip from "./StatusChip";
 import AssessmentForm from "./AssessmentForm";
 import ReviewPanel from "./ReviewPanel";
 import JobSummary from "./JobSummary";
-import { WORKBENCH_STATUS } from "./workbenchStatus";
+import RequisitionPanel from "./RequisitionPanel";
+import { resolveStatus } from "./workbenchStatus";
 
 export default function WorkbenchDetailPage() {
   const { requestId } = useParams();
@@ -57,7 +58,7 @@ export default function WorkbenchDetailPage() {
   }
 
   const { request } = state;
-  const info = WORKBENCH_STATUS[request.status];
+  const info = resolveStatus(request.status, request.requisition?.status);
 
   const handleUpdated = (data) => setState({ status: "ready", request: data });
 
@@ -79,7 +80,7 @@ export default function WorkbenchDetailPage() {
       <section className={cardClass}>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h1 className="font-mono text-lg font-semibold text-ink">{request.tracking_number}</h1>
-          <StatusChip status={request.status} />
+          <StatusChip status={request.status} requisitionStatus={request.requisition?.status} />
         </div>
 
         {info && <p className="mt-2 text-sm text-ink-muted">{info.hint}</p>}
@@ -114,6 +115,10 @@ export default function WorkbenchDetailPage() {
 
       {request.status === "completed" && (
         <ReviewPanel request={request} onReviewed={handleReviewed} />
+      )}
+
+      {request.status === "approved" && request.requisition && (
+        <RequisitionPanel request={request} onUpdated={handleUpdated} />
       )}
 
       <JobSummary request={request} />

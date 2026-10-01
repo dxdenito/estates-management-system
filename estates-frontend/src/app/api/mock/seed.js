@@ -52,6 +52,37 @@ const SAMPLES = [
     description: "Roof sheets are loose on Block A after the wind and rain is getting in.",
     age_days: 2, category_id: 6, triaged_days_ago: 1.5, status: "assigned_to_supervisor", supervisor_id: 8, updated_days_ago: 0.4,
   },
+    {
+    name: "Norah Wekesa", pf_number: "11455", email: "norah.wekesa@uni.ac.ke", phone_extension: "2510", location_id: 13,
+    description: "The concrete steps at the Administration Block entrance are cracked and crumbling.",
+    age_days: 8, category_id: 3, triaged_days_ago: 7.5, status: "approved", supervisor_id: 2, updated_days_ago: 1,
+    assessment: { materials_available: false, work_required: "Break out and recast three steps. Materials needed: cement, sand, ballast, reinforcement mesh.", notes: null, days_ago: 4 },
+    requisition: { status: "approved", procurement_ref: null, days_ago: 4 },
+  },
+  {
+    name: "Victor Langat", pf_number: "10933", email: "victor.langat@uni.ac.ke", phone_extension: "2233", location_id: 12,
+    description: "The water heater in the staff kitchenette has stopped working.",
+    age_days: 10, category_id: 2, triaged_days_ago: 9.5, status: "approved", supervisor_id: 2, updated_days_ago: 2,
+    assessment: { materials_available: false, work_required: "Replace the heater element and thermostat. Materials needed: element, thermostat.", notes: null, days_ago: 6 },
+    requisition: { status: "submitted", procurement_ref: "PR-2026-0412", days_ago: 6 },
+  },
+  {
+    name: "Joyce Nekesa", pf_number: "11290", email: "joyce.nekesa@uni.ac.ke", phone_extension: "2544", location_id: 17,
+    description: "The distribution board in Block A trips repeatedly.",
+    age_days: 11, category_id: 1, triaged_days_ago: 10.5, status: "materials_issued", supervisor_id: 2, updated_days_ago: 0.6,
+    assessment: { materials_available: false, work_required: "Replace the main breaker and two circuit breakers. Materials needed: 1 x 63A breaker, 2 x 20A breakers.", notes: null, days_ago: 8 },
+    requisition: { status: "issued", procurement_ref: "PR-2026-0398", days_ago: 8 },
+  },
+  {
+    name: "Alice Muthoni", pf_number: "10412", email: "alice.muthoni@uni.ac.ke", phone_extension: "2019", location_id: 3,
+    description: "The lock on the first-floor library storeroom door is broken.",
+    age_days: 12, category_id: 8, triaged_days_ago: 11.5, status: "closed", supervisor_id: 8, updated_days_ago: 1, closed_days_ago: 1,
+    assessment: { materials_available: true, work_required: "Replace the mortice lock and cut two keys.", notes: null, days_ago: 10 },
+    assignment: { artisan_id: 10, artisan_name: "Beatrice Banda", days_ago: 9 },
+    completion_reports: [
+      { description: "Fitted a new mortice lock and cut two keys.", materials_used: "1 x mortice lock", days_ago: 2, review: { outcome: "approved", suggested_fixes: null, days_ago: 1 } },
+    ],
+  },
 ];
 
 const ago = (days) => new Date(Date.now() - days * DAY_MS).toISOString();
@@ -69,6 +100,8 @@ export const buildSeedRequests = () =>
       requisition,
       assignment,
       completion_reports,
+      closed_days_ago,
+      
       ...fields
     } = sample;
 
@@ -86,6 +119,7 @@ export const buildSeedRequests = () =>
       supervisor_id: supervisor_id ?? null,
       triaged_at: triaged ? ago(triaged_days_ago) : null,
       updated_at: ago(updated_days_ago ?? triaged_days_ago ?? age_days),
+      closed_at: closed_days_ago != null ? ago(closed_days_ago) : null,
       assessment: assessment
         ? {
             materials_available: assessment.materials_available,

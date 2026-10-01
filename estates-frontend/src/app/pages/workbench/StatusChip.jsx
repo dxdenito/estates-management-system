@@ -1,7 +1,7 @@
-import { TONE_CLASS, WORKBENCH_STATUS } from "./workbenchStatus";
+import { TONE_CLASS, resolveStatus } from "./workbenchStatus";
 
-export default function StatusChip({ status }) {
-  const info = WORKBENCH_STATUS[status];
+export default function StatusChip({ status, requisitionStatus }) {
+  const info = resolveStatus(status, requisitionStatus);
 
   if (!info) return null;
 

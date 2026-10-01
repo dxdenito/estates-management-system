@@ -17,6 +17,19 @@ export const demoUsers = [
     email: "multi@estates.test",
     roles: [ROLES.FIELD_SUPERVISOR, ROLES.CLEANING_SUPERVISOR],
   },
+  { id: 9, name: "Fiona Field", email: "field2@estates.test", roles: [ROLES.FIELD_SUPERVISOR] },
+];
+
+export const supervisorCategories = {
+  2: [1, 2, 3, 4],
+  8: [5, 6, 7, 8],
+  9: [1, 2, 5, 6],
+};
+
+export const artisans = [
+  { id: 5, name: "Arthur Artisan" },
+  { id: 10, name: "Beatrice Banda" },
+  { id: 11, name: "Charles Cheruiyot" },
 ];
 
 export const locations = [
@@ -39,6 +52,7 @@ export const locations = [
   { id: 17, parent_id: 16, name: "Block A", type: "building", level: 1 },
   { id: 18, parent_id: 16, name: "Block B", type: "building", level: 1 },
 ];
+
 export const categories = [
   { id: 1, name: "Electrical" },
   { id: 2, name: "Plumbing" },
@@ -49,7 +63,3 @@ export const categories = [
   { id: 7, name: "Glazing" },
   { id: 8, name: "Locks and Security" },
 ];
-export const supervisorCategories = {
-  2: [1, 2, 3, 4],
-  8: [5, 6, 7, 8],
-};

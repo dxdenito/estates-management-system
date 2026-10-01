@@ -54,6 +54,7 @@ const toListItem = (request, scope) => ({
   category_name: categoryName(request.category_id),
   requester_name: request.name,
   status: request.status,
+  requisition_status: request.requisition?.status ?? null,
   since: scope === "available" ? request.triaged_at : (request.updated_at ?? request.confirmed_at),
 });
 
@@ -223,6 +224,43 @@ export function registerWorkbenchMocks(mock) {
     }
 
     ctx.request.updated_at = now;
+    writeRequests(ctx.requests);
+
+    return [200, toDetail(ctx.request)];
+  });
+    mock.onPost(/\/workbench\/requests\/\d+\/requisition\/submit$/).reply((config) => {
+    const ctx = loadOwned(config, 3);
+    if (ctx.denied) return ctx.denied;
+
+    const { procurement_ref } = JSON.parse(config.data);
+
+    if (!procurement_ref || !procurement_ref.trim()) {
+      return [422, { detail: "Enter the procurement reference." }];
+    }
+
+    if (ctx.request.status !== "approved" || ctx.request.requisition?.status !== "approved") {
+      return [409, { detail: "This requisition is not ready to be submitted." }];
+    }
+
+    ctx.request.requisition.status = "submitted";
+    ctx.request.requisition.procurement_ref = procurement_ref.trim();
+    ctx.request.updated_at = new Date().toISOString();
+    writeRequests(ctx.requests);
+
+    return [200, toDetail(ctx.request)];
+  });
+
+  mock.onPost(/\/workbench\/requests\/\d+\/requisition\/issue$/).reply((config) => {
+    const ctx = loadOwned(config, 3);
+    if (ctx.denied) return ctx.denied;
+
+    if (ctx.request.status !== "approved" || ctx.request.requisition?.status !== "submitted") {
+      return [409, { detail: "This requisition has not been submitted yet." }];
+    }
+
+    ctx.request.requisition.status = "issued";
+    ctx.request.status = "materials_issued";
+    ctx.request.updated_at = new Date().toISOString();
     writeRequests(ctx.requests);
 
     return [200, toDetail(ctx.request)];

@@ -202,7 +202,7 @@ export default function WorkbenchPage() {
                       <span className="font-mono text-sm font-medium text-ink">
                         {item.tracking_number}
                       </span>
-                      <StatusChip status={item.status} />
+                      <StatusChip status={item.status} requisitionStatus={item.requisition_status} />
                     </div>
                     <p className="mt-1 line-clamp-2 text-sm text-ink">{item.description}</p>
                     <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-ink-muted">

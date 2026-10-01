@@ -4,6 +4,7 @@ import { ROLES, withAdmin } from "../../routing/roles";
 import { locations, categories, demoUsers, DEMO_PASSWORD, INSTITUTIONAL_DOMAINS } from "./data";
 import { buildSeedRequests } from "./seed";
 import { registerWorkbenchMocks, workbenchCounts } from "./workbench";
+   import { registerManagerMocks, managerCounts } from "./manager";
 
 const SESSION_KEY = "mock_session_user_id";
 const REQUESTS_KEY = "mock_requests";
@@ -305,6 +306,7 @@ export function installMocks() {
   });
 
   registerWorkbenchMocks(mock);
+  registerManagerMocks(mock);
 
   window.mockSetStatus = (number, status) => {
     const requests = readRequests();

@@ -15,9 +15,14 @@ export const WORKBENCH_STATUS = {
     hint: "The requisition is waiting for manager approval.",
   },
   approved: {
+    label: "Submit requisition",
+    tone: "action",
+    hint: "The manager approved the requisition. Submit it to procurement and record the reference.",
+  },
+  approved_submitted: {
     label: "Materials on order",
     tone: "waiting",
-    hint: "The requisition is approved and procurement is under way.",
+    hint: "Submitted to procurement. Mark it issued when the materials arrive.",
   },
   materials_issued: {
     label: "Awaiting assignment",
@@ -45,6 +50,11 @@ export const WORKBENCH_STATUS = {
     hint: "This request is closed.",
   },
 };
+
+export const resolveStatus = (status, requisitionStatus) =>
+  status === "approved" && requisitionStatus === "submitted"
+    ? WORKBENCH_STATUS.approved_submitted
+    : WORKBENCH_STATUS[status];
 
 export const REQUISITION_STATUS_LABEL = {
   pending_approval: "Pending manager approval",
