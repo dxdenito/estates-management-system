@@ -18,19 +18,19 @@ export const demoUsers = [
     roles: [ROLES.FIELD_SUPERVISOR, ROLES.CLEANING_SUPERVISOR],
   },
   { id: 9, name: "Fiona Field", email: "field2@estates.test", roles: [ROLES.FIELD_SUPERVISOR] },
+  { id: 10, name: "Beatrice Banda", email: "artisan2@estates.test", roles: [ROLES.ARTISAN] },
+  { id: 11, name: "Charles Cheruiyot", email: "artisan3@estates.test", roles: [ROLES.ARTISAN] },
 ];
+
+export const artisans = demoUsers
+  .filter((user) => user.roles.includes(ROLES.ARTISAN))
+  .map(({ id, name }) => ({ id, name }));
 
 export const supervisorCategories = {
   2: [1, 2, 3, 4],
   8: [5, 6, 7, 8],
   9: [1, 2, 5, 6],
 };
-
-export const artisans = [
-  { id: 5, name: "Arthur Artisan" },
-  { id: 10, name: "Beatrice Banda" },
-  { id: 11, name: "Charles Cheruiyot" },
-];
 
 export const locations = [
   { id: 1, parent_id: null, name: "Main Library", type: "building", level: 0 },

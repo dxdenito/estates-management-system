@@ -16,7 +16,7 @@ import WorkbenchPage from "../pages/workbench/WorkbenchPage";
 import WorkbenchDetailPage from "../pages/workbench/WorkbenchDetailPage";
 import ManagerConsolePage from "../pages/manager/ManagerConsolePage";
 import ManagerRequestPage from "../pages/manager/ManagerRequestPage";
-import ArtisanTasklistPage from "../pages/artisan/ArtisanTasklistPage";
+
 import ArtisanTaskPage from "../pages/artisan/ArtisanTaskPage";
 import CleaningOversightPage from "../pages/cleaning/CleaningOversightPage";
 import CleaningInspectionPage from "../pages/cleaning/CleaningInspectionPage";
@@ -26,6 +26,7 @@ import ReportsPage from "../pages/reports/ReportsPage";
 import ContractorPortalPage from "../pages/contractor/ContractorPortalPage";
 import PublicLayout from "../components/layout/PublicLayout";
 import DashboardPage from "../pages/dashboard/DashboardPage";
+import ArtisanTasklistPage from "../pages/artisan/ArtisanTaskListPage";
 
 export default function AppRoutes() {
   return (

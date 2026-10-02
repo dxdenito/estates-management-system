@@ -104,7 +104,7 @@ export default function LoginPage() {
           </p>
           <p className="mt-1 font-mono text-xs leading-relaxed">
             officer@estates.test, field@estates.test, cleaning@estates.test,
-            manager@estates.test, artisan@estates.test, contractor@estates.test,
+            manager@estates.test, artisan@estates.test, artisan2@estates.test,artisan3@estates.test, contractor@estates.test,
             admin@estates.test, multi@estates.test
           </p>
         </div>

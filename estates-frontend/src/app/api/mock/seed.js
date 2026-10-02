@@ -83,6 +83,33 @@ const SAMPLES = [
       { description: "Fitted a new mortice lock and cut two keys.", materials_used: "1 x mortice lock", days_ago: 2, review: { outcome: "approved", suggested_fixes: null, days_ago: 1 } },
     ],
   },
+    {
+    name: "Gideon Sang", pf_number: "10744", email: "gideon.sang@uni.ac.ke", phone_extension: "2601", location_id: 18,
+    description: "Two toilets on the Block B ground floor are blocked and overflowing.",
+    age_days: 4, category_id: 2, triaged_days_ago: 3.5, status: "assigned_to_artisan", supervisor_id: 2, updated_days_ago: 0.2,
+    assessment: { materials_available: true, work_required: "Clear the blocked drains in both toilets and check the soil pipe connection.", notes: "Bring drain rods. The water shut-off is inside the caretaker's room.", days_ago: 1 },
+    assignment: { artisan_id: 5, artisan_name: "Arthur Artisan", days_ago: 0.2 },
+  },
+  {
+    name: "Mildred Anyango", pf_number: "11033", email: "mildred.anyango@uni.ac.ke", phone_extension: "2688", location_id: 8,
+    description: "The ceiling in the first-floor lab has a water stain and is sagging.",
+    age_days: 9, category_id: 6, triaged_days_ago: 8.5, status: "in_progress", supervisor_id: 8, updated_days_ago: 0.4,
+    assessment: { materials_available: true, work_required: "Replace the stained ceiling board and seal the roof leak above it.", notes: null, days_ago: 6 },
+    assignment: { artisan_id: 5, artisan_name: "Arthur Artisan", days_ago: 5 },
+    completion_reports: [
+      { description: "Replaced the ceiling board.", materials_used: "1 x ceiling board, 4 screws", days_ago: 1.5, review: { outcome: "rejected", suggested_fixes: "The roof above is still leaking. Seal it before closing the ceiling.", days_ago: 0.4 } },
+    ],
+  },
+  {
+    name: "Paul Kibet", pf_number: "10655", email: "paul.kibet@uni.ac.ke", phone_extension: "2012", location_id: 12,
+    description: "The light switch in the records room is broken.",
+    age_days: 10, category_id: 1, triaged_days_ago: 9.5, status: "closed", supervisor_id: 2, updated_days_ago: 3, closed_days_ago: 3,
+    assessment: { materials_available: true, work_required: "Replace the light switch and test the circuit.", notes: null, days_ago: 8 },
+    assignment: { artisan_id: 5, artisan_name: "Arthur Artisan", days_ago: 7 },
+    completion_reports: [
+      { description: "Replaced the switch and tested the circuit.", materials_used: "1 x light switch", days_ago: 4, review: { outcome: "approved", suggested_fixes: null, days_ago: 3 } },
+    ],
+  },
 ];
 
 const ago = (days) => new Date(Date.now() - days * DAY_MS).toISOString();

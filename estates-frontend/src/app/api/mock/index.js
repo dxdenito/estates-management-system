@@ -4,7 +4,8 @@ import { ROLES, withAdmin } from "../../routing/roles";
 import { locations, categories, demoUsers, DEMO_PASSWORD, INSTITUTIONAL_DOMAINS } from "./data";
 import { buildSeedRequests } from "./seed";
 import { registerWorkbenchMocks, workbenchCounts } from "./workbench";
-   import { registerManagerMocks, managerCounts } from "./manager";
+import { registerManagerMocks, managerCounts } from "./manager";
+import { registerArtisanMocks, artisanCounts } from "./artisan";
 
 const SESSION_KEY = "mock_session_user_id";
 const REQUESTS_KEY = "mock_requests";
@@ -227,8 +228,7 @@ export function installMocks() {
         manager_pending_approvals: 5,
         manager_unassigned: 6,
         manager_closed_month: 27,
-        artisan_assigned: 3,
-        artisan_rework: 1,
+        ...artisanCounts(currentUser()),
         cleaning_open_deficiencies: 7,
         cleaning_inspections_week: 12,
         contractor_officers: 18,
@@ -307,6 +307,7 @@ export function installMocks() {
 
   registerWorkbenchMocks(mock);
   registerManagerMocks(mock);
+  registerArtisanMocks(mock);
 
   window.mockSetStatus = (number, status) => {
     const requests = readRequests();
