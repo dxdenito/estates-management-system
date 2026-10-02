@@ -27,6 +27,7 @@ import ContractorPortalPage from "../pages/contractor/ContractorPortalPage";
 import PublicLayout from "../components/layout/PublicLayout";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import ArtisanTasklistPage from "../pages/artisan/ArtisanTaskListPage";
+import InspectionFormPage from "../pages/cleaning/InspectionFormPage";
 
 export default function AppRoutes() {
   return (
@@ -69,6 +70,7 @@ export default function AppRoutes() {
 
           <Route element={<ProtectedRoute allowedRoles={withAdmin(ROLES.CLEANING_SUPERVISOR)} />}>
             <Route path="/cleaning" element={<CleaningOversightPage />} />
+            <Route path="/cleaning/new" element={<InspectionFormPage />} />
             <Route path="/cleaning/:inspectionId" element={<CleaningInspectionPage />} />
           </Route>
 

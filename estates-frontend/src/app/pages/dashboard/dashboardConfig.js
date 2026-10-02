@@ -40,14 +40,18 @@ export const DASHBOARD_SECTIONS = [
     ],
     actions: [{ to: "/tasks", label: "Open my tasks" }],
   },
-  {
+    {
     role: ROLES.CLEANING_SUPERVISOR,
     title: "Cleaning oversight",
     stats: [
+      { key: "cleaning_to_verify", label: "Ready to verify" },
       { key: "cleaning_open_deficiencies", label: "Open deficiencies" },
       { key: "cleaning_inspections_week", label: "Inspections this week" },
     ],
-    actions: [{ to: "/cleaning", label: "Open cleaning oversight" }],
+    actions: [
+      { to: "/cleaning", label: "Open cleaning oversight" },
+      { to: "/cleaning/new", label: "Log inspection" },
+    ],
   },
   {
     role: ROLES.CONTRACTOR_SUPERVISOR,

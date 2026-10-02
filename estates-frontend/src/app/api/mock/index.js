@@ -6,6 +6,7 @@ import { buildSeedRequests } from "./seed";
 import { registerWorkbenchMocks, workbenchCounts } from "./workbench";
 import { registerManagerMocks, managerCounts } from "./manager";
 import { registerArtisanMocks, artisanCounts } from "./artisan";
+import { registerCleaningMocks, cleaningCounts } from "./cleaning";
 
 const SESSION_KEY = "mock_session_user_id";
 const REQUESTS_KEY = "mock_requests";
@@ -229,8 +230,7 @@ export function installMocks() {
         manager_unassigned: 6,
         manager_closed_month: 27,
         ...artisanCounts(currentUser()),
-        cleaning_open_deficiencies: 7,
-        cleaning_inspections_week: 12,
+        ...cleaningCounts(currentUser()),
         contractor_officers: 18,
         contractor_pending_actions: 4,
         admin_active_users: 24,
@@ -308,6 +308,7 @@ export function installMocks() {
   registerWorkbenchMocks(mock);
   registerManagerMocks(mock);
   registerArtisanMocks(mock);
+  registerCleaningMocks(mock);
 
   window.mockSetStatus = (number, status) => {
     const requests = readRequests();

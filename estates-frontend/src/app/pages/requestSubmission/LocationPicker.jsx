@@ -10,8 +10,11 @@ export default function LocationPicker({ onChange }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchLocationChildren(null)
-      .then((options) => setLevels([{ options, selectedId: "" }]))
+      fetchLocationChildren(null)
+      .then((options) => {
+        const visible = rootIds ? options.filter((option) => rootIds.includes(option.id)) : options;
+        setLevels([{ options: visible, selectedId: "" }]);
+      })
       .catch(() => setError("Could not load locations. Please refresh the page."))
       .finally(() => setLoading(false));
   }, []);
