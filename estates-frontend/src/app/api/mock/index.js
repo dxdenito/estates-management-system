@@ -10,6 +10,7 @@ import { registerCleaningMocks, cleaningCounts } from "./cleaning";
 import { registerAuthMocks } from "./auth";
 import { registerAdminMocks, adminCounts } from "./admin";
 import { hydrateUsers } from "./users";
+import { registerReferenceMocks, hydrateReference } from "./reference";
 
 const SESSION_KEY = "mock_session_user_id";
 const REQUESTS_KEY = "mock_requests";
@@ -110,11 +111,12 @@ export function installMocks() {
   }
 
 hydrateUsers();
+hydrateReference();
 
   mock.onGet("/locations").reply((config) => {
     const parentId = config.params?.parent_id ? Number(config.params.parent_id) : null;
     const children = locations
-      .filter((node) => node.parent_id === parentId)
+               .filter((node) => node.parent_id === parentId && node.active !== false)
       .map(({ id, name, type }) => ({ id, name, type }));
     return [200, children];
   });
@@ -223,9 +225,11 @@ hydrateUsers();
     ];
   });
 
-  mock.onGet("/categories").reply(() =>
-    currentUser() ? [200, categories] : [401, { detail: "Not authenticated" }]
-  );
+   mock.onGet("/categories").reply(() =>
+       currentUser()
+         ? [200, categories.filter((category) => category.active !== false)]
+         : [401, { detail: "Not authenticated" }]
+     );
 
   mock.onGet("/triage/requests").reply((config) => {
     const denied = guardOfficer();
@@ -296,6 +300,7 @@ hydrateUsers();
   registerCleaningMocks(mock);
      registerAuthMocks(mock);
    registerAdminMocks(mock);
+   registerReferenceMocks(mock);
 
   window.mockSetStatus = (number, status) => {
     const requests = readRequests();
