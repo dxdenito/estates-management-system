@@ -72,6 +72,7 @@ export default function InspectionFormPage() {
 
       navigate(`/cleaning/${data.id}`, { state: { notice } });
     } catch (err) {
+      setAreas([]);
       setError(getErrorMessage(err));
       setSaving(false);
     }

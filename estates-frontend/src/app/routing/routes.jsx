@@ -28,6 +28,9 @@ import PublicLayout from "../components/layout/PublicLayout";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import ArtisanTasklistPage from "../pages/artisan/ArtisanTaskListPage";
 import InspectionFormPage from "../pages/cleaning/InspectionFormPage";
+import UserFormPage from "../pages/admin/UserFormPage";
+import ConfirmEmailPage from "../pages/auth/ConfirmEmailPage";
+import ChangePasswordPage from "../pages/auth/ChangePassowrdPage";
 
 export default function AppRoutes() {
   return (
@@ -38,6 +41,7 @@ export default function AppRoutes() {
         <Route path="/confirm/:token" element={<ConfirmationPage />} />
         <Route path="/track" element={<TrackingPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/confirm-email/:token" element={<ConfirmEmailPage />} />
       </Route>
 
       
@@ -46,6 +50,7 @@ export default function AppRoutes() {
         <Route element={<Layout />}>
 
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/change-password" element={<ChangePasswordPage />} />
           <Route element={<ProtectedRoute allowedRoles={withAdmin(ROLES.OFFICER)} />}>
             <Route path="/triage" element={<TriageQueuePage />} />
             <Route path="/triage/:requestId" element={<TriageDetailPage />} />
@@ -76,6 +81,8 @@ export default function AppRoutes() {
 
           <Route element={<ProtectedRoute allowedRoles={withAdmin()} />}>
             <Route path="/admin/users" element={<UserManagementPage />} />
+            <Route path="/admin/users/new" element={<UserFormPage />} />
+            <Route path="/admin/users/:userId" element={<UserFormPage />} />
           </Route>
 
           <Route element={<ProtectedRoute allowedRoles={withAdmin(ROLES.MANAGER)} />}>

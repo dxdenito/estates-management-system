@@ -16,7 +16,7 @@ export const writeRequests = (requests) =>
 
 export const currentUser = () => {
   const id = Number(sessionStorage.getItem(SESSION_KEY));
-  return demoUsers.find((user) => user.id === id) ?? null;
+  return demoUsers.find((user) => user.id === id && user.active !== false) ?? null;
 };
 
 export const locationPath = (locationId) => {

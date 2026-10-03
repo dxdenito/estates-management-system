@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { getErrorMessage } from "../../api/errors";
 
 import {
   cardClass,
@@ -38,7 +39,7 @@ export default function LoginPage() {
       setError(
         err.response?.status === 401
           ? "Incorrect email or password."
-          : "Could not sign in. Please try again."
+          : getErrorMessage(err)
       );
       setSubmitting(false);
     }

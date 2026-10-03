@@ -4,18 +4,21 @@ import { inputClass } from "../../components/ui/styles";
 
 const formatType = (type) => type.charAt(0).toUpperCase() + type.slice(1);
 
-export default function LocationPicker({ onChange }) {
+export default function LocationPicker({ onChange, rootIds }) {
   const [levels, setLevels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-      fetchLocationChildren(null)
+    fetchLocationChildren(null)
       .then((options) => {
         const visible = rootIds ? options.filter((option) => rootIds.includes(option.id)) : options;
         setLevels([{ options: visible, selectedId: "" }]);
       })
-      .catch(() => setError("Could not load locations. Please refresh the page."))
+      .catch((err) => {
+        console.error("Failed to load locations:", err);
+        setError("Could not load locations. Please refresh the page.");
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -40,7 +43,8 @@ export default function LocationPicker({ onChange }) {
           ? [...current, { options: children, selectedId: "" }]
           : current
       );
-    } catch {
+    } catch (err) {
+      console.error("Failed to load child locations:", err);
       setError("Could not load more detail for this location.");
     }
   };
@@ -70,7 +74,7 @@ export default function LocationPicker({ onChange }) {
         </select>
       ))}
       {error && (
-        <p role="alert" className="text-sm text-danger">
+        <p role="alert" className="text-sm text-danger-strong">
           {error}
         </p>
       )}

@@ -113,7 +113,7 @@ export function registerManagerMocks(mock) {
     const categoryId = Number(config.params?.category_id);
 
     const supervisors = demoUsers
-      .filter((user) => (supervisorCategories[user.id] ?? []).includes(categoryId))
+      .filter((user) => user.active !== false && (supervisorCategories[user.id] ?? []).includes(categoryId))
       .map(({ id, name }) => ({ id, name }));
 
     return [200, supervisors];

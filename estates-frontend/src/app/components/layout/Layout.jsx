@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { ROLES, withAdmin } from "../../routing/roles";
 import { secondaryButtonClass } from "../ui/styles";
@@ -42,6 +42,9 @@ export default function Layout() {
         <span className="text-lg font-semibold text-primary">Estates Management</span>
         <div className="flex items-center gap-4">
           <span className="hidden text-sm text-ink-muted sm:inline">{user.name}</span>
+          <Link to="/change-password" className="text-sm text-ink-muted hover:text-ink">
+            Change password
+          </Link>
           <button type="button" onClick={handleLogout} className={secondaryButtonClass}>
             Log out
           </button>
